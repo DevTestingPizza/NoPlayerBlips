@@ -4,6 +4,7 @@ Citizen.CreateThread(function()
         for x=0,32 do
             local entityblip = GetBlipFromEntity(GetPlayerPed(x))
             if DoesBlipExist(entityblip) then
+                SetBlipShowCone(blip, false)
                 SetBlipDisplay(entityblip, 1)
             end
         end
