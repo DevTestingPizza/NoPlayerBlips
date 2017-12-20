@@ -34,11 +34,25 @@ Citizen.CreateThread(function()
                     SetBlipDisplay(entityblip, blip_display_type)
                 end
             end
+            for x=0,32 do
+                local PLD_Blip = GetFirstBlipInfoId(1)
+                if DoesBlipExist(PLD_Blip) then
+                    SetBlipSprite(PLD_Blip, 239)
+                    SetBlipDisplay(PLD_Blip, blip_display_type)
+                end
+            end
         else
             for x=0,32 do
                 local entityblip = GetBlipFromEntity(GetPlayerPed(x))
                 if DoesBlipExist(entityblip) then
                     SetBlipDisplay(entityblip, alternative_blip_display_type)
+                end
+            end
+            for x=0,32 do
+                local PLD_Blip = GetFirstBlipInfoId(239)
+                if DoesBlipExist(PLD_Blip) then
+                    SetBlipSprite(PLD_Blip, 1)
+                    SetBlipDisplay(PLD_Blip, blip_display_type)
                 end
             end
         end
