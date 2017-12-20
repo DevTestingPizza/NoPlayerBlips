@@ -16,7 +16,11 @@ local blip_display_type = 1 -- (default: 1)
 -- 3: show blips in the pause menu only (hidden on minimap/radar).
 local alternative_blip_display_type = 2 -- (default: 2)
 
-
+-- Set this to false if this is causing problems on your server.
+-- It's a somewhat hacky solution to remove PLD blips but it's not 100% tested.
+-- Also PLD blips don't take permissions or displaytypes in mind, if you leave this
+-- as "true", the blips will be gone for everyone until the server restarts and players restart their game.
+local disable_pld_blips = true
 
 
 --- Don't touch this code
@@ -32,6 +36,13 @@ Citizen.CreateThread(function()
                 if DoesBlipExist(entityblip) then
                     SetBlipShowCone(blip, false)
                     SetBlipDisplay(entityblip, blip_display_type)
+                end
+                if disable_pld_blips then
+                    local PLD_Blip = GetFirstBlipInfoId(1)
+                    if DoesBlipExist(PLD_Blip) then
+                        SetBlipSprite(PLD_Blip, 239)
+                        SetBlipDisplay(PLD_Blip, blip_display_type)
+                    end
                 end
             end
         else
