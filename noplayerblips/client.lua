@@ -26,9 +26,7 @@ Citizen.CreateThread(function()
     TriggerServerEvent('CheckPermissions')
     while true do
         Citizen.Wait(0) -- Wait 0 seconds to prevent crashing.
-        print(tostring(god))
         if not god and NetworkGetNumConnectedPlayers() >= min_players_online then
-            print('hide')
             for x=0,32 do
                 local entityblip = GetBlipFromEntity(GetPlayerPed(x))
                 if DoesBlipExist(entityblip) then
@@ -37,7 +35,6 @@ Citizen.CreateThread(function()
                 end
             end
         else
-            print('show')
             for x=0,32 do
                 local entityblip = GetBlipFromEntity(GetPlayerPed(x))
                 if DoesBlipExist(entityblip) then
