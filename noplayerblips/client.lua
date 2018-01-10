@@ -22,6 +22,11 @@ local alternative_blip_display_type = 2 -- (default: 2)
 -- as "true", the blips will be gone for everyone until the server restarts and players restart their game.
 local disable_pld_blips = true
 
+-- Set this to false if you still want to be able to see player names above their heads.
+-- People with the god permission will always be able to see the player names.
+-- If you enabled the min_players_online option, then playernames will only be hidden if there's enough players online.
+local disable_player_names = true
+
 
 --- Don't touch this code
 local god = false
@@ -45,6 +50,11 @@ Citizen.CreateThread(function()
                     end
                 end
             end
+            if disable_player_names then
+                for gamerTag=32,32+NetworkGetNumConnectedPlayers() do
+                    RemoveMpGamerTag(gamerTag)
+                end
+            end
         else
             for x=0,32 do
                 local entityblip = GetBlipFromEntity(GetPlayerPed(x))
@@ -53,6 +63,7 @@ Citizen.CreateThread(function()
                 end
             end
         end
+        
     end
 end)
 
