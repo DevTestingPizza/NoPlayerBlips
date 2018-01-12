@@ -27,6 +27,11 @@ local disable_pld_blips = true
 -- If you enabled the min_players_online option, then playernames will only be hidden if there's enough players online.
 local disable_player_names = true
 
+-- Distance in meters. If you are within -distance- meters from another player, you will see their name above their head.
+-- Set this to -1 if you want all player names to be hidden at all times (no matter how close you get to someone, 
+-- you won't see their names). (God permission still overrides this, god players can see them all the time!)
+local disable_player_names_distance = 5
+
 
 --- Don't touch this code
 local god = false
@@ -50,9 +55,19 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-            if disable_player_names then
-                for gamerTag=32,32+NetworkGetNumConnectedPlayers() do
-                    RemoveMpGamerTag(gamerTag)
+            -- Loop through all the players
+            for Player=0,NetworkGetNumConnectedPlayers() do
+                local GamerTagId = 0
+                local PlayerPed = GetPlayerPed(Player)
+                
+                -- If the player (loop id) is NOT the same as the current player, create a new GamerTagId.
+                if Player ~= PlayerId() then
+                    GamerTagId = CreateMpGamerTag(PlayerPed, GetPlayerName(Player), false, false, "", 0)
+                end
+                
+                -- Using that GamerTagId, we remove the gamertag if the player is more than _distance_ away from another other player.
+                if Vdist2(GetEntityCoords(PlayerPed, true), GetEntityCoords(PlayerPedId(), true)) > disable_player_names_distance * 10 or GamerTagId == PlayerId() then
+                    RemoveMpGamerTag(GamerTagId)
                 end
             end
         else
@@ -63,7 +78,6 @@ Citizen.CreateThread(function()
                 end
             end
         end
-        
     end
 end)
 
