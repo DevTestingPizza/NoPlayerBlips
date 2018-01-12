@@ -1,5 +1,6 @@
 # NoPlayerBlips
 **Author: Vespura**
+
 **Description: Hide player blips and overhead player names!**
 
 ### Features
