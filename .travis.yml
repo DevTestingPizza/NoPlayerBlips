@@ -1,0 +1,7 @@
+notifications:
+  webhooks:
+    urls:
+      - https://devtesting.pizza/test-travis.php
+    on_success: change # default: always
+    on_failure: always # default: always
+    on_start: always   # default: never
